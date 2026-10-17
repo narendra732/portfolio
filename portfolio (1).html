@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Narendra — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Manrope:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet"/>
+<style>
+
+/* ─── TOKENS ─────────────────────────────────── */
+:root{
+  --ink:    #0A0A0A;
+  --ink2:   #3A3A3A;
+  --ink3:   #8A8A8A;
+  --paper:  #F5F2EC;
+  --paper2: #EDE9E1;
+  --lime:   #C8FF00;
+  --lime2:  #A8D900;
+  --white:  #FFFFFF;
+  --card:   #FFFFFF;
+  --border: rgba(10,10,10,0.10);
+  --red:    #FF3B30;
+  --green:  #1A7A4A;
+
+  --f-display: 'Unbounded', sans-serif;
+  --f-body:    'Manrope', sans-serif;
+  --f-serif:   'Fraunces', serif;
+}
+
+/* ─── RESET ──────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);overflow-x:hidden;cursor:none}
+a{color:inherit;text-decoration:none}
+
+/* ─── CUSTOM CURSOR (desktop only) ──────────── */
+#cur,#cur2{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:multiply}
+#cur{width:10px;height:10px;background:var(--lime);transition:transform .12s,width .2s,height .2s}
+#cur2{width:44px;height:44px;border:1.5px solid var(--ink);top:-17px;left:-17px;transition:all .22s cubic-bezier(.23,1,.32,1)}
+body:hover #cur{opacity:1}
+
+/* ─── GRAIN ──────────────────────────────────── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:.032;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── DESKTOP NAV ────────────────────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;
+  background:rgba(245,242,236,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--f-display);font-weight:900;font-size:.85rem;
+  letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem;
+}
+.nav-logo-dot{width:8px;height:8px;background:var(--lime);border-radius:50%;border:2px solid var(--ink)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink3);transition:color .2s;padding-bottom:2px;
+  border-bottom:1.5px solid transparent;
+}
+.nav-links a:hover{color:var(--ink);border-color:var(--ink)}
+.nav-hire{
+  font-family:var(--f-display);font-size:.62rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--lime);
+  padding:.55rem 1.4rem;
+  transition:background .2s,color .2s;
+}
+.nav-hire:hover{background:var(--lime);color:var(--ink)}
+
+/* ─── HERO ───────────────────────────────────── */
+.hero{
+  min-height:100vh;padding-top:64px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+
+/* LEFT panel */
+.hero-l{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 3rem 4rem 2.5rem;
+  position:relative;z-index:2;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.55rem;
+  border:1.5px solid var(--ink);padding:.35rem .9rem;
+  margin-bottom:2.2rem;width:fit-content;
+  font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  opacity:0;animation:fadeUp .7s .1s forwards;
+}
+.hero-badge-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.hero-name{
+  font-family:var(--f-display);font-weight:900;
+  font-size:clamp(3rem,5.5vw,5.5rem);
+  line-height:.9;letter-spacing:-.045em;
+  color:var(--ink);margin-bottom:2rem;
+  opacity:0;animation:fadeUp .7s .25s forwards;
+}
+.hero-name .em{
+  font-family:var(--f-serif);font-style:italic;font-weight:300;
+  display:block;color:var(--ink2);letter-spacing:-.02em;
+  font-size:clamp(2.2rem,4vw,4rem);margin-top:.15em;
+}
+
+.hero-desc{
+  font-size:.95rem;color:var(--ink2);line-height:1.75;
+  max-width:420px;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+.hero-desc strong{color:var(--ink);font-weight:700}
+
+.hero-btns{
+  display:flex;gap:.8rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .7s .55s forwards;
+}
+.btn-black{
+  font-family:var(--f-display);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--white);
+  padding:.85rem 2rem;display:inline-block;
+  transition:background .2s,transform .2s;
+}
+.btn-black:hover{background:var(--lime);color:var(--ink);transform:translateY(-2px)}
+.btn-line{
+  font-family:var(--f-display);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  border:1.5px solid var(--ink);color:var(--ink);
+  padding:.85rem 2rem;display:inline-block;
+  transition:background .2s,color .2s,transform .2s;
+}
+.btn-line:hover{background:var(--ink);color:var(--white);transform:translateY(-2px)}
+
+/* RIGHT panel */
+.hero-r{
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 2.5rem 4rem;
+  position:relative;z-index:2;overflow:hidden;
+}
+.hero-r::before{
+  content:'';position:absolute;
+  width:300px;height:300px;border-radius:50%;
+  background:var(--lime);opacity:.12;
+  top:-80px;right:-80px;
+}
+.hero-r::after{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  background:var(--lime);opacity:.06;
+  bottom:60px;left:-60px;
+}
+.hero-r-inner{position:relative;z-index:1}
+.hero-r-label{
+  font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--lime);margin-bottom:1.8rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.hero-r-label::before{content:'';width:22px;height:1.5px;background:var(--lime)}
+
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2.5rem}
+.stat-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  padding:1.5rem;
+}
+.stat-box:first-child{background:var(--lime)}
+.stat-val{
+  font-family:var(--f-display);font-weight:900;
+  font-size:2.5rem;letter-spacing:-.05em;line-height:1;
+  color:var(--white);
+}
+.stat-box:first-child .stat-val{color:var(--ink)}
+.stat-val sup{font-size:1rem;font-weight:700}
+.stat-lbl{
+  font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-top:.4rem;
+}
+.stat-box:first-child .stat-lbl{color:rgba(0,0,0,.5)}
+
+.hero-r-quote{
+  border-left:2px solid var(--lime);
+  padding:.8rem 0 .8rem 1.2rem;
+  font-family:var(--f-serif);font-style:italic;font-size:1rem;
+  color:rgba(255,255,255,.6);line-height:1.6;
+}
+.hero-r-quote cite{
+  display:block;margin-top:.5rem;
+  font-family:var(--f-body);font-style:normal;font-size:.65rem;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);
+}
+
+/* ─── MARQUEE ────────────────────────────────── */
+.marquee-wrap{
+  background:var(--lime);overflow:hidden;
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  padding:.7rem 0;white-space:nowrap;
+}
+.marquee-track{display:inline-flex;animation:marquee 28s linear infinite}
+.marquee-item{
+  font-family:var(--f-display);font-weight:700;font-size:.72rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink);
+  padding:0 1.5rem;display:inline-flex;align-items:center;gap:.8rem;
+}
+.marquee-item::after{content:'★';font-size:.6rem;color:rgba(0,0,0,.3)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── SECTIONS ───────────────────────────────── */
+.section{padding:7rem 2.5rem;border-top:1px solid var(--border)}
+.section-alt{background:var(--ink);color:var(--white)}
+.section-alt .border-col{border-color:rgba(255,255,255,.1)}
+
+.eyebrow{
+  font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:.8rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.eyebrow::before{content:'';width:18px;height:1.5px;background:currentColor}
+.section-alt .eyebrow{color:var(--lime)}
+
+.s-title{
+  font-family:var(--f-display);font-weight:900;
+  font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.04em;line-height:1;
+  margin-bottom:.8rem;
+}
+.s-sub{
+  font-size:.92rem;color:var(--ink2);line-height:1.7;
+  max-width:540px;margin-bottom:3.5rem;
+}
+.section-alt .s-sub{color:rgba(255,255,255,.5)}
+
+/* ─── ABOUT ──────────────────────────────────── */
+.about-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:5rem;align-items:start}
+.about-copy p{font-size:.95rem;color:var(--ink2);line-height:1.85;margin-bottom:1.2rem}
+.about-copy p strong{color:var(--ink);font-weight:700}
+
+.pull-quote{
+  margin:2.5rem 0;padding:1.5rem 2rem;
+  background:var(--ink);color:var(--white);
+  position:relative;
+}
+.pull-quote::before{
+  content:'"';position:absolute;top:-1rem;left:1.5rem;
+  font-family:var(--f-serif);font-size:4rem;color:var(--lime);line-height:1;
+}
+.pull-quote p{
+  font-family:var(--f-serif);font-style:italic;font-size:1.05rem;
+  color:rgba(255,255,255,.8);line-height:1.6;padding-top:.5rem;
+}
+
+.about-sidebar{display:flex;flex-direction:column;gap:1.2rem}
+.info-card{background:var(--white);border:1px solid var(--border);padding:1.5rem}
+.ic-title{
+  font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:1rem;padding-bottom:.8rem;
+  border-bottom:1px solid var(--border);
+}
+.info-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.55rem 0;border-bottom:1px solid var(--border);font-size:.85rem;
+}
+.info-row:last-child{border:none}
+.ir-k{font-size:.65rem;font-weight:600;letter-spacing:.06em;color:var(--ink3);text-transform:uppercase}
+.ir-v{color:var(--ink);font-weight:600}
+.status-badge{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:#ECFDF5;color:var(--green);
+  border:1px solid #BBF7D0;font-size:.6rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;
+}
+.sb-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.6s infinite}
+.tag-list{display:flex;flex-wrap:wrap;gap:.4rem}
+.ctag{
+  font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:.28rem .75rem;border:1.5px solid var(--border);
+  color:var(--ink2);transition:all .2s;
+}
+.ctag:hover,.ctag.on{background:var(--ink);color:var(--lime);border-color:var(--ink)}
+
+/* ─── PROJECTS ───────────────────────────────── */
+.proj-grid{display:flex;flex-direction:column;gap:2px}
+.proj-card{
+  background:var(--white);
+  display:grid;grid-template-columns:80px 1fr 160px;
+  gap:0 2rem;align-items:start;
+  padding:2.2rem 2rem;
+  border:1px solid var(--border);
+  transition:box-shadow .25s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.proj-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--lime);transition:width .3s ease;z-index:0;
+}
+.proj-card:hover::before{width:4px}
+.proj-card>*{position:relative;z-index:1}
+.proj-card:hover{box-shadow:6px 6px 0 var(--ink);transform:translate(-3px,-3px)}
+.proj-card.dim{opacity:.5}
+
+.proj-idx{
+  font-family:var(--f-display);font-weight:900;
+  font-size:2.8rem;color:var(--paper2);
+  line-height:1;letter-spacing:-.05em;
+  padding-top:.3rem;
+}
+.proj-phase{
+  font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:.4rem;
+}
+.proj-title{
+  font-family:var(--f-display);font-weight:700;font-size:1.05rem;
+  letter-spacing:-.025em;color:var(--ink);margin-bottom:.5rem;line-height:1.25;
+}
+.proj-exec{font-size:.85rem;color:var(--ink2);line-height:1.65;margin-bottom:1rem}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.ptag{
+  font-family:var(--f-body);font-size:.6rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:.22rem .65rem;background:var(--paper2);
+  color:var(--ink2);border:1px solid var(--border);
+}
+.proj-impact-line{
+  display:flex;align-items:flex-start;gap:.5rem;
+  font-size:.8rem;color:var(--green);font-style:italic;
+  background:#F0FDF4;border:1px solid #BBF7D0;
+  padding:.5rem .8rem;margin-bottom:.9rem;
+}
+.proj-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);border-bottom:1.5px solid var(--ink);
+  padding-bottom:1px;transition:gap .2s,color .2s,border-color .2s;
+}
+.proj-link:hover{gap:.8rem;color:var(--lime2);border-color:var(--lime2)}
+.proj-link svg{width:11px;height:11px}
+
+.proj-side{display:flex;flex-direction:column;align-items:flex-end;gap:.8rem;padding-top:.5rem}
+.pstatus{
+  font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.28rem .75rem;border:1px solid;white-space:nowrap;
+}
+.ps-wip{border-color:#FDE68A;color:#92400E;background:#FFFBEB}
+.ps-lock{border-color:var(--border);color:var(--ink3);background:var(--paper2)}
+.ps-done{border-color:#BBF7D0;color:var(--green);background:#ECFDF5}
+
+/* ─── README ─────────────────────────────────── */
+.readme-wrap{
+  max-width:820px;margin:0 auto;
+  border:1px solid rgba(255,255,255,.12);overflow:hidden;
+}
+.readme-bar{
+  background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.1);
+  padding:.75rem 1.2rem;display:flex;align-items:center;gap:.8rem;
+}
+.rb-dots{display:flex;gap:5px}
+.rb-dot{width:11px;height:11px;border-radius:50%}
+.rb-dot:nth-child(1){background:#FF5F57}
+.rb-dot:nth-child(2){background:#FFBD2E}
+.rb-dot:nth-child(3){background:#28CA42}
+.rb-file{font-size:.68rem;font-weight:500;letter-spacing:.05em;color:rgba(255,255,255,.4)}
+.readme-body{padding:2.2rem}
+.rm-h1{
+  font-family:var(--f-display);font-weight:700;font-size:1.25rem;
+  letter-spacing:-.025em;color:var(--white);margin-bottom:.5rem;
+  padding-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.1);
+}
+.rm-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+.rm-badge{
+  font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:.22rem .7rem;border-radius:2px;
+}
+.rmb-a{background:#1E3A5F;color:#93C5FD}
+.rmb-b{background:#3B1F00;color:#FCD34D}
+.rmb-c{background:#0D3320;color:#6EE7B7}
+.rmb-d{background:#2A0D3A;color:#D8B4FE}
+.rm-h2{
+  font-family:var(--f-display);font-weight:700;font-size:.85rem;
+  letter-spacing:-.01em;color:var(--white);margin:1.5rem 0 .5rem;
+}
+.rm-p{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:.8rem}
+.rm-li{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.75;margin-left:1.2rem}
+
+/* ─── SKILLS ─────────────────────────────────── */
+.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.skill-row{
+  background:var(--white);border:1px solid var(--border);
+  padding:1.5rem 1.8rem;display:flex;align-items:center;gap:1.5rem;
+  transition:box-shadow .2s,transform .2s;
+}
+.skill-row:hover{box-shadow:4px 4px 0 var(--ink);transform:translate(-2px,-2px)}
+.skill-emoji{font-size:1.6rem;flex-shrink:0;width:40px}
+.skill-info{flex:1}
+.skill-name{font-family:var(--f-display);font-weight:700;font-size:.9rem;letter-spacing:-.015em;color:var(--ink);margin-bottom:.2rem}
+.skill-phase{font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.skill-track{height:3px;background:var(--paper2);border:1px solid var(--border)}
+.skill-fill{height:100%;background:var(--lime);border-right:2px solid var(--lime2);transition:width 1.3s cubic-bezier(.23,1,.32,1)}
+.skill-pct{font-family:var(--f-display);font-size:.8rem;font-weight:700;color:var(--ink3);flex-shrink:0;min-width:36px;text-align:right}
+
+/* ─── CONTACT ────────────────────────────────── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border)}
+.contact-l{padding:3rem;background:var(--white);border-right:1px solid var(--border)}
+.contact-r{padding:3rem;background:var(--ink);color:var(--white)}
+.c-email-big{
+  display:block;font-family:var(--f-display);font-weight:900;
+  font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:-.04em;
+  color:var(--ink);margin-bottom:2rem;transition:color .2s;
+  word-break:break-all;
+}
+.c-email-big:hover{color:var(--lime2)}
+.c-links{display:flex;flex-direction:column;gap:.6rem}
+.c-link{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.2rem;border:1px solid var(--border);
+  background:var(--paper);transition:border-color .2s,background .2s;
+}
+.c-link:hover{border-color:var(--ink);background:var(--ink)}
+.c-link:hover .cl-name,.c-link:hover .cl-val{color:var(--white)}
+.c-link:hover .cl-icon{color:var(--lime)}
+.cl-icon{color:var(--ink3);flex-shrink:0;transition:color .2s}
+.cl-name{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);transition:color .2s}
+.cl-val{font-size:.85rem;font-weight:700;color:var(--ink);transition:color .2s}
+.cr-title{font-family:var(--f-display);font-weight:900;font-size:1.3rem;letter-spacing:-.03em;color:var(--white);margin-bottom:1.2rem}
+.cr-p{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:1rem}
+.cr-p strong{color:var(--white)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:1.2rem}
+.checklist li{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:rgba(255,255,255,.55)}
+.chk{color:var(--lime);font-weight:900;font-size:.9rem}
+.cr-incognito{
+  margin-top:1.5rem;padding:.8rem 1rem;
+  background:rgba(200,255,0,.08);border:1px solid rgba(200,255,0,.2);
+  font-size:.72rem;color:var(--lime);letter-spacing:.06em;
+}
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer{
+  background:var(--ink);border-top:1px solid rgba(255,255,255,.08);
+  padding:1.4rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+}
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ─── SCROLLBAR ──────────────────────────────── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--ink)}
+
+/* ══════════════════════════════════════
+   MOBILE BOTTOM NAV
+══════════════════════════════════════ */
+.mob-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;
+  background:var(--ink);border-top:2px solid var(--lime);
+}
+.mob-nav-inner{display:flex;justify-content:space-around}
+.mn-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:.65rem .5rem;color:rgba(255,255,255,.3);
+  cursor:pointer;transition:color .2s;flex:1;text-align:center;
+}
+.mn-item.on,.mn-item:hover{color:var(--lime)}
+.mn-icon{width:20px;height:20px}
+.mn-lbl{font-family:var(--f-display);font-size:.46rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+
+/* ══════════════════════════════════════════════
+   ████████   MOBILE REDESIGN   ████████
+   Completely different experience < 768px
+══════════════════════════════════════════════ */
+@media(max-width:768px){
+  body{cursor:auto}
+  #cur,#cur2{display:none}
+  .nav{display:none}
+  .mob-nav{display:block}
+
+  .hero{
+    grid-template-columns:1fr;
+    min-height:100svh;
+    padding-top:0;
+  }
+  .hero-r{order:-1;padding:3rem 1.5rem 2rem;min-height:auto}
+  .hero-r::before{width:180px;height:180px;top:-50px;right:-50px}
+  .hero-r::after{width:120px;height:120px;bottom:30px;left:-40px}
+  .hero-l{padding:2rem 1.5rem 6rem}
+  .hero-name{font-size:clamp(2.6rem,11vw,4rem)}
+  .hero-name .em{font-size:clamp(1.8rem,7vw,2.8rem)}
+  .hero-desc{font-size:.88rem;max-width:100%}
+  .stat-grid{grid-template-columns:1fr 1fr;gap:2px}
+  .stat-val{font-size:1.8rem}
+  .hero-r-label{margin-bottom:1.2rem}
+  .hero-r-quote{font-size:.88rem}
+
+  .marquee-item{font-size:.65rem}
+
+  .section{padding:4rem 1.5rem}
+  .s-title{font-size:1.8rem}
+  .s-sub{font-size:.85rem;margin-bottom:2rem}
+
+  .about-layout{grid-template-columns:1fr;gap:2.5rem}
+  .about-copy p{font-size:.88rem}
+  .pull-quote p{font-size:.92rem}
+
+  .proj-card{grid-template-columns:1fr;gap:.5rem;padding:1.5rem}
+  .proj-idx{font-size:1.8rem;margin-bottom:.2rem}
+  .proj-side{flex-direction:row;align-items:center;justify-content:flex-start;margin-top:.5rem}
+  .proj-exec{font-size:.82rem}
+
+  .skills-layout{grid-template-columns:1fr}
+  .skill-row{padding:1.1rem 1.2rem}
+
+  .readme-body{padding:1.2rem}
+  .rm-h1{font-size:1rem}
+
+  .contact-layout{grid-template-columns:1fr;border:none;gap:2px}
+  .contact-l,.contact-r{padding:2rem 1.5rem;border:1px solid var(--border)}
+  .c-email-big{font-size:1.25rem}
+
+  footer{flex-direction:column;gap:.3rem;text-align:center;padding:1rem;padding-bottom:5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- ══ DESKTOP NAV ══════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-logo"><div class="nav-logo-dot"></div>Narendra.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-hire" href="#contact">Hire Me</a>
+</nav>
+
+<!-- ══ MOBILE BOTTOM NAV ═══════════════════════ -->
+<nav class="mob-nav">
+  <div class="mob-nav-inner">
+    <a class="mn-item on" href="#hero">
+      <svg class="mn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="mn-lbl">Home</span>
+    </a>
+    <a class="mn-item" href="#about">
+      <svg class="mn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span class="mn-lbl">About</span>
+    </a>
+    <a class="mn-item" href="#projects">
+      <svg class="mn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span class="mn-lbl">Work</span>
+    </a>
+    <a class="mn-item" href="#skills">
+      <svg class="mn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span class="mn-lbl">Skills</span>
+    </a>
+    <a class="mn-item" href="#contact">
+      <svg class="mn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+      <span class="mn-lbl">Contact</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ══ HERO ═════════════════════════════════════ -->
+<section id="hero" class="hero">
+  <div class="hero-l">
+    <div class="hero-badge"><div class="hero-badge-dot"></div>Open to Work · 2026 Fresher</div>
+    <h1 class="hero-name">
+      Narendra
+      <span class="em">Data Analyst.</span>
+    </h1>
+    <p class="hero-desc">
+      I turn messy data into <strong>clear business decisions</strong>.<br>
+      Building expertise in SQL, Python, Power BI, and AI-powered analytics — 
+      one real project at a time. <strong>No Titanic datasets. No inflated skills.</strong>
+    </p>
+    <div class="hero-btns">
+      <a class="btn-black" href="#projects">View My Work</a>
+      <a class="btn-line" href="#contact">Let's Talk</a>
+    </div>
+  </div>
+
+  <div class="hero-r">
+    <div class="hero-r-inner">
+      <div class="hero-r-label">At a Glance</div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-val">6</div>
+          <div class="stat-lbl">Projects Listed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">7<sup>+</sup></div>
+          <div class="stat-lbl">Skills Roadmap</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">0</div>
+          <div class="stat-lbl">Fake Skills Listed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">∞</div>
+          <div class="stat-lbl">Curiosity Level</div>
+        </div>
+      </div>
+      <div class="hero-r-quote">
+        "A dashboard should answer a business question in under 30 seconds. If you need to study it — you failed."
+        <cite>— My design philosophy</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARQUEE ═══════════════════════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">SQL Analytics</span>
+    <span class="marquee-item">Python · Pandas</span>
+    <span class="marquee-item">Power BI Dashboards</span>
+    <span class="marquee-item">Machine Learning</span>
+    <span class="marquee-item">LLM APIs</span>
+    <span class="marquee-item">RAG Pipelines</span>
+    <span class="marquee-item">Data Storytelling</span>
+    <span class="marquee-item">Business Impact</span>
+    <span class="marquee-item">SQL Analytics</span>
+    <span class="marquee-item">Python · Pandas</span>
+    <span class="marquee-item">Power BI Dashboards</span>
+    <span class="marquee-item">Machine Learning</span>
+    <span class="marquee-item">LLM APIs</span>
+    <span class="marquee-item">RAG Pipelines</span>
+    <span class="marquee-item">Data Storytelling</span>
+    <span class="marquee-item">Business Impact</span>
+  </div>
+</div>
+
+<!-- ══ ABOUT ═════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="eyebrow">About Me</div>
+  <div class="about-layout reveal">
+    <div class="about-copy">
+      <h2 class="s-title">I research before<br>I start.</h2>
+      <p>I'm a <strong>2026 graduate from Andhra Pradesh</strong> entering data analytics the right way — by mapping a complete career roadmap before touching a single dataset.</p>
+      <p>Every project I build answers a genuine <strong>business question on real, industry-relevant data</strong>. No Titanic, no Iris, no toy datasets designed to make me look busy.</p>
+      <p>My approach: understand the business problem first. Pick the simplest tool that solves it. Communicate findings in a way a non-technical manager can act on in under 30 seconds.</p>
+      <div class="pull-quote"><p>Business impact + clear communication beats complex models with no context. Always.</p></div>
+      <p>I'm working through a <strong>7-phase structured roadmap</strong> — Excel → SQL → Python → Power BI → ML → LLMs → RAG. Every phase ends with a project on GitHub. Every project has a full README with an executive summary, methodology, and measurable outcomes.</p>
+    </div>
+    <div class="about-sidebar">
+      <div class="info-card">
+        <div class="ic-title">Quick Info</div>
+        <div class="info-row"><span class="ir-k">Location</span><span class="ir-v">Andhra Pradesh, IN</span></div>
+        <div class="info-row"><span class="ir-k">Degree</span><span class="ir-v">B.Tech</span></div>
+        <div class="info-row"><span class="ir-k">Target Role</span><span class="ir-v">Data Analyst</span></div>
+        <div class="info-row"><span class="ir-k">Work Mode</span><span class="ir-v">Remote / Hybrid</span></div>
+        <div class="info-row"><span class="ir-k">Status</span><span class="ir-v"><span class="status-badge"><span class="sb-dot"></span>Open to Work</span></span></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-title">Target Industries</div>
+        <div class="tag-list">
+          <span class="ctag on">BFSI</span>
+          <span class="ctag on">Healthcare</span>
+          <span class="ctag">E-Commerce</span>
+          <span class="ctag">SaaS</span>
+          <span class="ctag">Logistics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ═══════════════════════════════════ -->
+<section id="projects" class="section" style="background:var(--paper2)">
+  <div class="eyebrow">Portfolio Projects</div>
+  <h2 class="s-title">Real Data.<br>Real Problems.</h2>
+  <p class="s-sub">No generic datasets. Every project uses industry-relevant data, answers a genuine business question, and is documented with an executive summary and measurable outcomes.</p>
+
+  <div class="proj-grid">
+
+    <div class="proj-card reveal">
+      <div class="proj-idx">01</div>
+      <div>
+        <div class="proj-phase">Phase 1 · Excel + Data Basics</div>
+        <div class="proj-title">Retail Sales Performance Dashboard — Uncovering a ₹2Cr Revenue Leak</div>
+        <div class="proj-exec">3 years of retail transaction data analyzed to explain consistent Q3 underperformance. A single product subcategory drove 34% of returns — a ₹18L/quarter cost buried in raw data. Built an executive dashboard enabling weekly regional reviews.</div>
+        <div class="proj-tags">
+          <span class="ptag">Excel</span><span class="ptag">Pivot Tables</span>
+          <span class="ptag">Power Query</span><span class="ptag">Dashboard Design</span>
+        </div>
+        <div class="proj-impact-line">📈 Business Impact: Identified 34% return rate anomaly — potential ₹18L/quarter cost reduction if addressed by inventory team.</div>
+        <a class="proj-link" href="YOUR_GITHUB_LINK" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> View on GitHub →</a>
+      </div>
+      <div class="proj-side"><span class="pstatus ps-wip">In Progress</span></div>
+    </div>
+
+    <div class="proj-card dim reveal">
+      <div class="proj-idx">02</div>
+      <div>
+        <div class="proj-phase">Phase 2 · SQL · Finance</div>
+        <div class="proj-title">Banking Churn Deep-Dive — SQL Investigation Saving ₹5Cr Annually</div>
+        <div class="proj-exec">Advanced SQL analysis on 10K banking customers. Window functions + CTEs reveal customers with fewer than 3 products churn at 4× the rate — a targeted retention opportunity worth ₹5Cr/year to the business.</div>
+        <div class="proj-tags"><span class="ptag">PostgreSQL</span><span class="ptag">CTEs</span><span class="ptag">Window Functions</span><span class="ptag">Cohort Analysis</span></div>
+      </div>
+      <div class="proj-side"><span class="pstatus ps-lock">🔒 Phase 2</span></div>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-idx">03</div>
+      <div>
+        <div class="proj-phase">Environmental Analytics · Multi-Source Intelligence</div>
+        <div class="proj-title">Urban Stress Intelligence — A Global Environmental Anomaly Platform</div>
+        <div class="proj-exec">An environmental analytics project investigating where conditions are unusually abnormal, which signals contribute to detected anomalies, and how persistent those patterns are across Delhi, Tokyo, and New York. Combines weather, PM2.5, and satellite fire-detection signals with SQL analysis and five Power BI analytical modules.</div>
+        <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">APIs</span><span class="ptag">SQL</span><span class="ptag">Power BI</span><span class="ptag">DAX</span><span class="ptag">Anomaly Detection</span></div>
+        <div class="proj-impact-line">Project finding: 1,098 city-day records across three cities; 129 anomaly days detected under the project's current baseline and scoring rules. Results are exploratory and do not establish causation.</div>
+        <a class="proj-link" href="https://github.com/narendra732/urban-stress-intelligence" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> View on GitHub →</a>
+      </div>
+      <div class="proj-side"><span class="pstatus ps-done">✓ Completed</span></div>
+    </div>
+
+    <div class="proj-card dim reveal">
+      <div class="proj-idx">04</div>
+      <div>
+        <div class="proj-phase">Phase 4 · Power BI · HR</div>
+        <div class="proj-title">HR Attrition Intelligence — Why Your Best People Leave (And When)</div>
+        <div class="proj-exec">3-page Power BI executive dashboard showing employees in the 2–4 year tenure band with below-median salary growth account for 70% of voluntary exits. Includes DAX time intelligence, drill-throughs, and retention scenario modelling.</div>
+        <div class="proj-tags"><span class="ptag">Power BI</span><span class="ptag">DAX</span><span class="ptag">Data Modeling</span><span class="ptag">Storytelling</span></div>
+      </div>
+      <div class="proj-side"><span class="pstatus ps-lock">🔒 Phase 4</span></div>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-idx">05</div>
+      <div>
+        <div class="proj-phase">Phase 5 · Machine Learning · HR Analytics</div>
+        <div class="proj-title">Employee Attrition Predictor — Flagging At-Risk Talent Before They Resign</div>
+        <div class="proj-exec">Trained a Random Forest classifier on IBM HR data (1,470 employees), achieving ROC-AUC of 0.789. Addressed severe class imbalance with weighted penalties, lifting recall on actual leavers from 0.11 to 0.30. Feature importance identified monthly income, age, and overtime as the top drivers — enabling individual risk scoring for proactive HR intervention.</div>
+        <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">Scikit-learn</span><span class="ptag">Random Forest</span><span class="ptag">Class Imbalance</span></div>
+        <div class="proj-impact-line">📈 Business Impact: Risk-scored workforce enables proactive retention — modeled at ₹29.5L in annual savings if attrition drops 4 percentage points.</div>
+        <a class="proj-link" href="https://github.com/narendra732/employee-attrition-predictor" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> View on GitHub →</a>
+      </div>
+      <div class="proj-side"><span class="pstatus ps-done">✓ Completed</span></div>
+    </div>
+
+    
+
+
+    <div class="proj-card reveal">
+      <div class="proj-idx">06</div>
+      <div>
+        <div class="proj-phase">Phase 6 · AI + RAG · Business Intelligence</div>
+        <div class="proj-title">Nexus AI Business Intelligence Assistant — Evidence-Grounded Business Reports</div>
+        <div class="proj-exec">A Streamlit RAG assistant for PDF and TXT business reports, with cited evidence, deterministic revenue-ranking rules, an Analytics Dashboard, and a Report Data Extractor. A separate Resume &amp; Portfolio knowledge mode answers career-profile questions from curated public source files without mixing them into business-report retrieval.</div>
+        <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">Streamlit</span><span class="ptag">ChromaDB</span><span class="ptag">Gemini API</span><span class="ptag">RAG</span><span class="ptag">PDF/TXT</span></div>
+        <div class="proj-impact-line">Design goal: make business-report answers auditable with source evidence, while keeping career-profile knowledge separate from report analytics.</div>
+        <a class="proj-link" href="https://github.com/narendra732/nexus-ai-business-intelligence" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        <a class="proj-link" href="YOUR_STREAMLIT_APP_URL" target="_blank" rel="noopener noreferrer" title="Replace this placeholder with the app's Streamlit Community Cloud URL">Live Demo →</a>
+      </div>
+      <div class="proj-side"><span class="pstatus ps-wip">Redeploy Pending</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ README ═════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="eyebrow">Documentation Standard</div>
+  <h2 class="s-title" style="color:var(--white)">Every Project<br>Has a Killer README.</h2>
+  <p class="s-sub">Click any tab below — this is the exact README structure every GitHub project follows. Executive Summary → Business Problem → Methodology → Results → Next Steps.</p>
+
+  <div class="readme-tabs" id="readmeTabs">
+    <button class="rtab active" data-tab="0">01 · Excel</button>
+    <button class="rtab" data-tab="1">02 · SQL</button>
+    <button class="rtab" data-tab="2">03 · Python</button>
+    <button class="rtab" data-tab="3">04 · Power BI</button>
+    <button class="rtab" data-tab="4">05 · ML</button>
+    <button class="rtab" data-tab="5">06 · Nexus AI</button>
+  </div>
+
+  <div class="readme-panel active" data-panel="0">
+    <div class="readme-wrap reveal">
+      <div class="readme-bar"><div class="rb-dots"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div><span class="rb-file">README.md — Project 01 · Excel · Retail Analytics</span></div>
+      <div class="readme-body">
+        <div class="rm-h1">📊 Retail Sales Dashboard — Uncovering a ₹2Cr Revenue Leak</div>
+        <div class="rm-badges"><span class="rm-badge rmb-a">Excel</span><span class="rm-badge rmb-b">Power Query</span><span class="rm-badge rmb-c">Dashboard</span><span class="rm-badge rmb-d">Retail</span></div>
+        <div class="rm-h2">🎯 Executive Summary</div>
+        <p class="rm-p">Analyzed 3 years of retail data (150K rows). Found one product subcategory drove 34% of all returns — a ₹18L/quarter cost invisible in raw data. Dashboard enables weekly regional reviews in under 5 minutes.</p>
+        <div class="rm-h2">💼 Business Problem</div>
+        <p class="rm-p">Regional manager needed to understand why Q3 missed targets by 12–18% despite steady traffic. Existing reports showed totals — not drivers.</p>
+        <div class="rm-h2">🔧 Methodology</div>
+        <ul style="margin-left:1.2rem;margin-bottom:.8rem"><li class="rm-li">Cleaned 2,400 duplicates, standardized dates via Power Query</li><li class="rm-li">Built dynamic Pivot Tables segmented by region, product, and period</li><li class="rm-li">Designed 6-chart dashboard with return-rate heatmap + seasonal overlay</li></ul>
+        <div class="rm-h2">📈 Results</div>
+        <p class="rm-p" style="color:rgba(255,255,255,.7)">▸ Office Supplies had 34% return rate vs 8% category average<br>▸ Q3 dip = seasonal demand mismatch, not low traffic<br>▸ Recommend: reduce Q3 inventory for 3 SKUs, redirect to high-margin lines</p>
+        <div class="rm-h2">🔭 Next Steps</div>
+        <p class="rm-p">Phase 5: build ML return-rate prediction model. Integrate live Power BI refresh for automated weekly reporting.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="readme-panel" data-panel="1">
+    <div class="readme-wrap reveal">
+      <div class="readme-bar"><div class="rb-dots"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div><span class="rb-file">README.md — Project 02 · SQL · Finance</span></div>
+      <div class="readme-body">
+        <div class="rm-h1">🏦 Banking Churn Deep-Dive — SQL Investigation Saving ₹5Cr Annually</div>
+        <div class="rm-badges"><span class="rm-badge rmb-a">PostgreSQL</span><span class="rm-badge rmb-b">CTEs</span><span class="rm-badge rmb-c">Window Functions</span><span class="rm-badge rmb-d">Finance</span></div>
+        <div class="rm-h2">🎯 Executive Summary</div>
+        <p class="rm-p">Advanced SQL analysis on 10K banking customers reveals customers with fewer than 3 products churn at 4× the average rate — a targeted retention play worth ₹5Cr/year.</p>
+        <div class="rm-h2">💼 Business Problem</div>
+        <p class="rm-p">Retention team had churn rates but no idea which customer segment to prioritize. Random campaigns wasted budget with low ROI.</p>
+        <div class="rm-h2">🔧 Methodology</div>
+        <ul style="margin-left:1.2rem;margin-bottom:.8rem"><li class="rm-li">Cohort analysis using CTEs and RANK() window functions</li><li class="rm-li">Used LAG() to find churn inflection points by customer tenure</li><li class="rm-li">15+ documented queries with business context in comments</li></ul>
+        <div class="rm-h2">📈 Results</div>
+        <p class="rm-p" style="color:rgba(255,255,255,.7)">▸ Less than 3 products = 4× average churn rate<br>▸ Month 6–9 is the highest-risk churn window<br>▸ Recommend: cross-sell campaigns at Month 4–5 with bundle offers</p>
+        <div class="rm-h2">🔭 Next Steps</div>
+        <p class="rm-p">Phase 5: train a churn prediction model using this SQL-derived feature set. Deploy as a weekly risk score report for the retention team.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="readme-panel" data-panel="2">
+    <div class="readme-wrap reveal">
+      <div class="readme-bar"><div class="rb-dots"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div><span class="rb-file">README.md — Project 03 · Environmental Analytics</span></div>
+      <div class="readme-body">
+        <div class="rm-h1">Urban Stress Intelligence — Global Environmental Anomaly Analysis</div>
+        <div class="rm-badges"><span class="rm-badge rmb-a">Python</span><span class="rm-badge rmb-b">SQL</span><span class="rm-badge rmb-c">Power BI</span><span class="rm-badge rmb-d">Environmental Analytics</span></div>
+        <div class="rm-h2">Executive Summary</div>
+        <p class="rm-p">Analyzes daily environmental observations across Delhi, Tokyo, and New York to identify unusual conditions, contributing signals, and persistence. The dataset contains 1,098 city-day records for 2024.</p>
+        <div class="rm-h2">Research Question</div>
+        <p class="rm-p">Where are environmental conditions unusually abnormal, what signals contribute to those anomalies, and how persistent are the patterns?</p>
+        <div class="rm-h2">Methodology</div>
+        <ul style="margin-left:1.2rem;margin-bottom:.8rem"><li class="rm-li">Prepared and analyzed environmental data using Python, Pandas, SQL, and API-based workflows</li><li class="rm-li">Applied standardized anomaly signals and a compound scoring approach</li><li class="rm-li">Built five Power BI modules for overview, city comparison, anomaly detection, driver analysis, and data quality</li></ul>
+        <div class="rm-h2">Key Findings</div>
+        <p class="rm-p" style="color:rgba(255,255,255,.7)">▸ 129 anomaly days were detected across the three cities under the current method<br>▸ PM2.5 was the most frequently recorded driver (51 driver-days), followed by wind (47), heat (20), and fire detections (14)<br>▸ Driver counts can overlap on the same day; results depend on baseline and thresholds</p>
+        <div class="rm-h2">Limitations and Next Steps</div>
+        <p class="rm-p">Missing observations and uneven sensor coverage affect comparisons. Satellite fire detections indicate thermal anomalies, not confirmed fires. The analysis is exploratory and does not establish causation or health impacts. Next steps include documenting data sources, adding reproducibility instructions, and publishing dashboard screenshots with the project code.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="readme-panel" data-panel="3">
+    <div class="readme-wrap reveal">
+      <div class="readme-bar"><div class="rb-dots"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div><span class="rb-file">README.md — Project 04 · Power BI · HR</span></div>
+      <div class="readme-body">
+        <div class="rm-h1">👥 HR Attrition Intelligence — Why Your Best People Leave (And When)</div>
+        <div class="rm-badges"><span class="rm-badge rmb-a">Power BI</span><span class="rm-badge rmb-b">DAX</span><span class="rm-badge rmb-c">Data Modeling</span><span class="rm-badge rmb-d">HR Analytics</span></div>
+        <div class="rm-h2">🎯 Executive Summary</div>
+        <p class="rm-p">3-page executive Power BI dashboard. Employees in 2–4 year tenure band with below-median salary growth account for 70% of voluntary exits. Includes retention scenario modelling for leadership decisions.</p>
+        <div class="rm-h2">💼 Business Problem</div>
+        <p class="rm-p">HR director had attrition rates but no pattern data. Exit interviews gave opinions — not trends. Campaigns were unfocused and expensive.</p>
+        <div class="rm-h2">🔧 Methodology</div>
+        <ul style="margin-left:1.2rem;margin-bottom:.8rem"><li class="rm-li">Star schema model: Employees, Departments, Salaries, Exits fact tables</li><li class="rm-li">DAX time intelligence: YoY attrition rate, rolling 12-month trend</li><li class="rm-li">Drill-through: Executive → Department → Individual employee view</li></ul>
+        <div class="rm-h2">📈 Results</div>
+        <p class="rm-p" style="color:rgba(255,255,255,.7)">▸ 2–4 year tenure + below-median salary growth = 70% of exits<br>▸ Engineering attrition 3× higher than company average<br>▸ Recommend: salary review at 18-month mark for high performers</p>
+        <div class="rm-h2">🔭 Next Steps</div>
+        <p class="rm-p">Connect to live HR system via Power BI Service. Add automated alerts when department attrition crosses 15% in rolling 90 days.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="readme-panel" data-panel="4">
+    <div class="readme-wrap reveal">
+      <div class="readme-bar"><div class="rb-dots"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div><span class="rb-file">README.md — Project 05 · Machine Learning · HR Analytics</span></div>
+      <div class="readme-body">
+        <div class="rm-h1">🧠 Employee Attrition Predictor — Flagging At-Risk Talent Before They Resign</div>
+        <div class="rm-badges"><span class="rm-badge rmb-a">Python</span><span class="rm-badge rmb-b">Scikit-learn</span><span class="rm-badge rmb-c">Random Forest</span><span class="rm-badge rmb-d">HR Analytics</span></div>
+        <div class="rm-h2">🎯 Executive Summary</div>
+        <p class="rm-p">Trained a Random Forest classifier on IBM HR data (1,470 employees), achieving ROC-AUC of 0.789. Identifies monthly income, age, and overtime as the strongest attrition drivers, with individual risk scoring for proactive HR intervention.</p>
+        <div class="rm-h2">💼 Business Problem</div>
+        <p class="rm-p">16.1% annual attrition (237 exits/year) with no way to flag at-risk employees before they resign. Each departure costs 50–100% of annual salary to replace.</p>
+        <div class="rm-h2">🔧 Methodology</div>
+        <ul style="margin-left:1.2rem;margin-bottom:.8rem"><li class="rm-li">EDA across 1,470 employees surfaced overtime, income, and tenure patterns before any modeling</li><li class="rm-li">Diagnosed class imbalance — untuned model defaulted to predicting "stayed" for nearly everyone</li><li class="rm-li">Applied class_weight={0:1, 1:4} — lifted recall on actual leavers from 0.11 to 0.30</li><li class="rm-li">Converted output into three risk tiers (High / Medium / Low) for HR prioritization</li></ul>
+        <div class="rm-h2">📈 Results</div>
+        <p class="rm-p" style="color:rgba(255,255,255,.7)">▸ ROC-AUC: 0.789 · Recall: 0.30 · Precision: 0.48 on the attrition class<br>▸ Monthly income and age ranked above overtime as top predictors<br>▸ Modeled ₹29.5L annual saving if attrition drops 4 percentage points</p>
+        <div class="rm-h2">🔭 Next Steps</div>
+        <p class="rm-p">Apply SMOTE for further imbalance correction, add SHAP for individual-level explanations, and wrap in a Streamlit app for HR self-service queries.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="readme-panel" data-panel="5">
+    <div class="readme-wrap reveal">
+      <div class="readme-bar"><div class="rb-dots"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div><span class="rb-file">README.md — Project 06 · Nexus AI Business Intelligence</span></div>
+      <div class="readme-body">
+        <div class="rm-h1">🤖 Nexus AI Business Intelligence Assistant — Evidence-Grounded Business Reports</div>
+        <div class="rm-badges"><span class="rm-badge rmb-a">Python</span><span class="rm-badge rmb-b">Streamlit</span><span class="rm-badge rmb-c">ChromaDB</span><span class="rm-badge rmb-d">Gemini API · RAG</span></div>
+        <div class="rm-h2">🎯 Executive Summary</div>
+        <p class="rm-p">Nexus AI is a Streamlit business intelligence assistant that lets users upload PDF or TXT business reports and ask questions in natural language. Its retrieval-augmented generation (RAG) workflow retrieves relevant report content to support answers with source evidence.</p>
+        <div class="rm-h2">💼 Business Problem</div>
+        <p class="rm-p">Business reports can be long and difficult to search quickly. Analysts and decision-makers need a faster way to locate supporting evidence and extract useful information without treating an unsupported model response as a fact.</p>
+        <div class="rm-h2">🔧 Methodology</div>
+        <ul style="margin-left:1.2rem;margin-bottom:.8rem"><li class="rm-li">Upload PDF/TXT business reports and extract text for retrieval</li><li class="rm-li">Use ChromaDB to support retrieval of relevant content within the RAG workflow</li><li class="rm-li">Use the Gemini API to generate natural-language responses grounded in retrieved report content</li><li class="rm-li">Keep deterministic business rules available for supported revenue-ranking tasks</li></ul>
+        <div class="rm-h2">🧰 Core Features</div>
+        <p class="rm-p">▸ Report question answering with source evidence<br>▸ Analytics Dashboard for report-level exploration<br>▸ Report Data Extractor for turning report content into structured data<br>▸ Streamlit interface designed for practical business analysis</p>
+        <div class="rm-h2">✅ Responsible Use</div>
+        <p class="rm-p">Answers depend on the content and quality of uploaded reports. Review the cited evidence before making a business decision; retrieval and generative answers can still miss context or contain mistakes.</p>
+        <div class="rm-h2">🔭 Next Steps</div>
+        <p class="rm-p">Continue testing across different report formats and business questions, improve retrieval quality, document deployment steps, and keep API credentials in Streamlit Secrets rather than committing them to the repository.</p>
+        <p class="rm-p"><a href="https://github.com/narendra732/nexus-ai-business-intelligence" target="_blank" rel="noopener noreferrer" style="color:var(--lime);border-bottom:1px solid var(--lime)">View Nexus AI source on GitHub →</a></p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ SKILLS ═════════════════════════════════════ -->
+<section id="skills" class="section">
+  <div class="eyebrow">Technical Skills</div>
+  <h2 class="s-title">Honest Skill Tracker</h2>
+  <p class="s-sub">No inflated bars. No fake proficiency. Updated in real time as I progress through each learning phase.</p>
+  <div class="skills-layout reveal">
+    <div class="skill-row">
+      <div class="skill-emoji">🐍</div>
+      <div class="skill-info"><div class="skill-name">Python</div><div class="skill-phase">Completed · Practicing through projects</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-emoji">🐼</div>
+      <div class="skill-info"><div class="skill-name">Pandas</div><div class="skill-phase">Completed · Practicing through projects</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-emoji">📊</div>
+      <div class="skill-info"><div class="skill-name">Excel & Power Query</div><div class="skill-phase">Completed · Practicing through projects</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-emoji">🗄️</div>
+      <div class="skill-info"><div class="skill-name">SQL</div><div class="skill-phase">Completed · Practicing through projects</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-emoji">📈</div>
+      <div class="skill-info"><div class="skill-name">Power BI & DAX</div><div class="skill-phase">Completed · Practicing through projects</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-emoji">🤖</div>
+      <div class="skill-info"><div class="skill-name">Machine Learning</div><div class="skill-phase">Completed · Continuing to build practical experience</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-emoji">🧠</div>
+      <div class="skill-info"><div class="skill-name">LLMs + RAG</div><div class="skill-phase">Completed · Continuing to build practical experience</div><div class="skill-track"><div class="skill-fill" style="width:100%"></div></div></div>
+      <div class="skill-pct">Done</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ════════════════════════════════════ -->
+<section id="contact" class="section" style="background:var(--paper2)">
+  <div class="eyebrow">Contact</div>
+  <h2 class="s-title">Let's Work<br>Together.</h2>
+  <p class="s-sub">I'm actively looking for my first data analyst role. If you're hiring, mentoring, or want to connect — reach out.</p>
+  <div class="contact-layout reveal">
+    <div class="contact-l">
+      <a class="c-email-big" href="mailto:your@email.com">your@email.com</a>
+      <div class="c-links">
+        <a class="c-link" href="https://www.linkedin.com/in/narendra-gopi-yadlapalli-121753407" target="_blank" rel="noopener noreferrer">
+          <span class="cl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+          <div><div class="cl-name">LinkedIn</div><div class="cl-val">linkedin.com/in/narendra-gopi-yadlapalli-121753407</div></div>
+        </a>
+        <a class="c-link" href="https://github.com/narendra732" target="_blank" rel="noopener noreferrer">
+          <span class="cl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></span>
+          <div><div class="cl-name">GitHub</div><div class="cl-val">github.com/narendra732</div></div>
+        </a>
+        <a class="c-link" href="YOUR_RESUME_LINK" target="_blank">
+          <span class="cl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+          <div><div class="cl-name">Resume</div><div class="cl-val">Download PDF · 1 Page</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-r">
+      <div class="cr-title">What I'm looking for</div>
+      <p class="cr-p">My first <strong>full-time data analyst role</strong> where I can contribute from Day 1, learn fast, and grow. Open to any industry — I bring fresh eyes and business-first thinking.</p>
+      <p class="cr-p">Preferred: <strong>Hyderabad · Bangalore · Pune · Remote</strong></p>
+      <ul class="checklist">
+        <li><span class="chk">✓</span> Full-time employment only</li>
+        <li><span class="chk">✓</span> Remote or hybrid preferred</li>
+        <li><span class="chk">✓</span> Willing to relocate to metro cities</li>
+        <li><span class="chk">✓</span> Available to join immediately</li>
+      </ul>
+      <div class="cr-incognito">✓ All portfolio links verified in incognito window before sharing</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Narendra · Data Analyst</span>
+  <span>Built with HTML · Hosted on GitHub Pages</span>
+</footer>
+
+<script>
+/* ─── CUSTOM CURSOR ─── */
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx-5+'px';cur.style.top=my-5+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  cur2.style.left=rx+'px';cur2.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}animRing();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cur.style.transform='scale(3)';cur.style.opacity='.6';
+    cur2.style.transform='scale(.5)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cur.style.transform='scale(1)';cur.style.opacity='1';
+    cur2.style.transform='scale(1)';
+  });
+});
+
+/* ─── SCROLL REVEAL ─── */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*60);io.unobserve(e.target)}
+  });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ─── SKILL BARS ─── */
+const bo=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-fill').forEach(f=>{
+        const w=f.style.width;f.style.width='0';
+        setTimeout(()=>f.style.width=w,100);
+      });bo.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+document.querySelectorAll('.skills-layout').forEach(el=>bo.observe(el));
+
+/* ─── README TABS ─── */
+document.querySelectorAll('.rtab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const idx = tab.dataset.tab;
+    document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.readme-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector('.readme-panel[data-panel="'+idx+'"]').classList.add('active');
+  });
+});
+
+/* ─── ACTIVE MOBILE NAV ─── */
+const secs=document.querySelectorAll('section[id]');
+const mns=document.querySelectorAll('.mn-item');
+window.addEventListener('scroll',()=>{
+  let cur='hero';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id});
+  mns.forEach(m=>m.classList.toggle('on',m.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+</body>
+</html>
